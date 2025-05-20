@@ -13,6 +13,18 @@ const Nav = () => {
           {/* Time */}
           <div className="hidden lg:inline-block">
             <h4 className="font-poppins-semibold ">Delivery in 10 minutes</h4>
+            <select
+              name=""
+              id=""
+              className={`outline-none appearance-none bg-[url(/HomePage/arrow-drop-down-line.png)] bg-no-repeat bg-[center_right_0px] pr-7 `}
+            >
+              <option value="">
+                Barasat, Kolkata, West Bengol
+              </option>
+              <option value="">
+                Barasat, Kolkata, West Bengol
+              </option>
+            </select>
           </div>
         </div>
         {/*  */}
@@ -21,7 +33,7 @@ const Nav = () => {
           <input
             type="text"
             placeholder="Search your books"
-            className="w-full placeholder:text-black placeholder:font-poppins-regular placeholder:text-[.8rem] "
+            className="w-full placeholder:text-black placeholder:font-poppins-regular placeholder:text-[.8rem] outline-none font-poppins-medium "
           />
         </div>
         {/*  */}
