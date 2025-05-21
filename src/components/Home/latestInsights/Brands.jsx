@@ -2,7 +2,7 @@ import "./BrandStyle.css";
 
 const Brands = () => {
   return (
-    <div className="w-full h-[20vw] lg:h-[18vh] flex justify-center flex-nowrap shrink-0 relative py-3  ">
+    <div className="w-full h-[20vw] lg:h-[18vh] xl:h-[21vh] flex justify-center flex-nowrap shrink-0 relative py-3  ">
       <div className="w-[100%] top-0 right-0 flex mt-[2px] shrink-0 relative brands  overflow-x-hidden ">
         <img
           src="/HomePage/Blog/company-image_2 .png"

@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Card from "../../../template/Card";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -56,7 +57,7 @@ const RecentlySoldProducts = () => {
   ]);
 
   return (
-    <section className="w-full h-[55vh] xl:h-[57vh] 2xl:h-[55vh] relative px-[5vw] bg-[#ffffff] ">
+    <section className="w-full h-[55vh] lg:h-[64vh] xl:h-[75vh] 2xl:h-[55vh] relative px-[5vw] bg-[#ffffff] ">
       <div className="max-w-screen-2xl h-full mx-auto relative bg-[#ffffff] pt-[2vw] ">
         <div className="mb-10 flex flex-col items-start gap-5 lg:flex-row lg:items-center lg:justify-between ">
           <div>
@@ -76,7 +77,7 @@ const RecentlySoldProducts = () => {
           <div className="hidden lg:inline-block">
             <button
               ref={prevRef}
-              className={`absolute left-0 top-1/2 -translate-y-1/2 p-4 rounded-full transition z-[50] drop-shadow-2xl bg-[white] `}
+              className={`absolute left-0 top-1/2 -translate-y-1/2 lg:p-2 xl:p-4 rounded-full transition z-[50] drop-shadow-2xl bg-[white] `}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +92,7 @@ const RecentlySoldProducts = () => {
             </button>
             <button
               ref={nextRef}
-              className={`absolute right-2 top-1/2 -translate-y-1/2 p-4 rounded-full transition z-[50] bg-[white] drop-shadow-2xl `}
+              className={`absolute right-2 top-1/2 -translate-y-1/2 lg:p-2 xl:p-4 rounded-full transition z-[50] bg-[white] drop-shadow-2xl `}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

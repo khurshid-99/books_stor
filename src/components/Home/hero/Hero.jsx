@@ -1,6 +1,6 @@
 const Hero = () => {
   return (
-    <header className="select-none relative w-full h-[40vh] lg:h-[40vh] xl:h-[45vh] 2xl:h-[50vh] bg-[#F9F9F9] py-[2vw] px-[5vw] ">
+    <header className="select-none relative w-full h-[40vh] lg:h-[47vh] xl:h-[55vh] 2xl:h-[50vh] bg-[#F9F9F9] py-[2vw] px-[5vw] ">
       <div className="relative max-w-screen-2xl h-full mx-auto bg-[url(/HomePage/banner/banner.jpg)] bg-cover bg-center bg-no-repeat rounded-2xl drop-shadow-xl pl-[5vw] flex items-center ">
         <div>
           <h1 className="text-[2rem] lg:text-[2.5vw] leading-none mb-2 font-poppins-regular ">

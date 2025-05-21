@@ -1,6 +1,6 @@
 const StayCnnected = () => {
   return (
-    <div className="w-full h-[70vh] lg:h-[45vh] relative bg-[#EDEDED] px-[5vw] overflow-hidden ">
+    <div className="w-full h-[70vh] lg:h-[55vh] xl:h-[60vh] 2xl:h-[50vh] relative bg-[#EDEDED] px-[5vw] overflow-hidden ">
       <div className="max-w-screen-2xl h-full mx-auto relative flex flex-col lg:flex-row lg:items-center lg:justify-between ">
         {/* --- */}
         <div className="w-full h-1/2 lg:w-1/2 lg:h-full pt-5 flex flex-col justify-center ">

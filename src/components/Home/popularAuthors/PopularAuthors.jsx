@@ -45,7 +45,7 @@ const PopularAuthors = () => {
   ]);
 
   return (
-    <section className="w-full h-[32vh] lg:h-[30vh] xl:h-[32vh] 2xl:h-[25vh] bg-[#ffffff] relative px-[5vw] ">
+    <section className="w-full h-[32vh] lg:h-[35vh] xl:h-[45vh] 2xl:h-[25vh] bg-[#ffffff] relative px-[5vw] ">
       <div className="max-w-screen-2xl h-full mx-auto relative pt-[2vw] ">
         <div className="mb-10 flex flex-col lg:flex-row items-start lg:items-center lg:justify-between gap-5 ">
           <div>
@@ -91,7 +91,7 @@ const PopularAuthors = () => {
             <div className="hidden lg:inline-block">
               <button
                 ref={prevRef}
-                className={`absolute left-0 top-1/2 -translate-y-1/2 p-4 rounded-full transition z-[50] drop-shadow-2xl bg-[white] `}
+                className={`absolute left-0 top-1/2 -translate-y-1/2 p-2 xl:p-4 rounded-full transition z-[50] drop-shadow-2xl bg-[white] `}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ const PopularAuthors = () => {
               </button>
               <button
                 ref={nextRef}
-                className={`absolute right-2 top-1/2 -translate-y-1/2 p-4 rounded-full transition z-[50] bg-[white] drop-shadow-2xl `}
+                className={`absolute right-2 top-1/2 -translate-y-1/2 lg:p-2 xl:p-4 rounded-full transition z-[50] bg-[white] drop-shadow-2xl `}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

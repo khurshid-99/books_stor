@@ -4,7 +4,7 @@ export const CategoreCard = ({ tital, images, bookName }) => {
       {/* --- */}
       <div className=" flex items-center gap-3 px-8 py-4 border-b-[0.5px] border-[#b8b8b84d]  ">
         <img src="/HomePage/Category/dot.png" alt="" />
-        <h4 className="font-bangoli-a text-[1.2rem] ">{tital}</h4>
+        <h4 className="font-bangoli-a lg:text-[.9rem] xl:text-[1.2rem] ">{tital}</h4>
       </div>
       {/* CArd */}
       <div className="w-full gap-5 py-5 flex items-center justify-center flex-wrap  ">
@@ -15,7 +15,7 @@ export const CategoreCard = ({ tital, images, bookName }) => {
               alt=""
               className="w-full object-cover object-center"
             />
-            <h5 className="mt-2 font-bangoli-b text-[.8rem] ">{bookName}</h5>
+            <h5 className="mt-2 font-bangoli-b lg:text-[.7rem] xl:text-[.8rem] ">{bookName}</h5>
           </div>
           <div className="w-1/2 h-full overflow-hidden">
             <img
@@ -23,7 +23,7 @@ export const CategoreCard = ({ tital, images, bookName }) => {
               alt=""
               className="w-full object-cover object-center"
             />
-            <h5 className="mt-2 font-bangoli-b text-[.8rem] ">{bookName}</h5>
+            <h5 className="mt-2 font-bangoli-b lg:text-[.7rem] xl:text-[.8rem] ">{bookName}</h5>
           </div>
         </div>
         <div className="w-full h-1/2 flex justify-center gap-8 px-8 ">
@@ -33,7 +33,7 @@ export const CategoreCard = ({ tital, images, bookName }) => {
               alt=""
               className="w-full object-cover object-center"
             />
-            <h5 className="mt-2 font-bangoli-b text-[.8rem] ">{bookName}</h5>
+            <h5 className="mt-2 font-bangoli-b lg:text-[.7rem] xl:text-[.8rem] ">{bookName}</h5>
           </div>
           <div className="w-1/2 h-full overflow-hidden">
             <img
@@ -41,12 +41,12 @@ export const CategoreCard = ({ tital, images, bookName }) => {
               alt=""
               className="w-full object-cover object-center"
             />
-            <h5 className="mt-2 font-bangoli-b text-[.8rem] ">{bookName}</h5>
+            <h5 className="mt-2 font-bangoli-b lg:text-[.7rem] xl:text-[.8rem] ">{bookName}</h5>
           </div>
         </div>
       </div>
       <div className="px-8">
-        <button className="text-orange font-poppins-medium capitalize cursor-pointer ">
+        <button className="text-orange font-poppins-medium capitalize cursor-pointer lg:text-[.8rem] ">
           see more
           <img
             src="/HomePage/Category/arrow.png"

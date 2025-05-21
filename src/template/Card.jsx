@@ -1,6 +1,6 @@
 const Card = ({ img, titel, author, price }) => {
   return (
-    <div className="select-none h-[27vh] w-[55vw] lg:w-[19vw] lg:h-[36vh] xl:w-[15vw] xl:h-[50vh] 2xl:w-[11.5vw] 2xl:h-[19vw] rounded-xl border-[.5px] border-[gray]/30 pt-5 drop-shadow bg-white shrink-0 relative ">
+    <div className="select-none h-[27vh] w-[55vw] lg:w-[19vw] lg:h-[43vh] xl:w-[15vw] xl:h-[50vh] 2xl:w-[11.5vw] 2xl:h-[19vw] rounded-xl border-[.5px] border-[gray]/30 pt-5 drop-shadow bg-white shrink-0 relative ">
       <div className="flex justify-center w-full ">
         <img
           src={img}

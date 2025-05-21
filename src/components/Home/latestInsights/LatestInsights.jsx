@@ -76,7 +76,7 @@ const LatestInsights = () => {
   ]);
 
   return (
-    <div className="w-full h-[78vh] lg:h-[85vh] px-[5vw] pt-2 relative ">
+    <div className="w-full h-[78vh] lg:h-[95vh] xl:h-[110vh] 2xl:h-[85vh] px-[5vw] pt-2 relative ">
       <div className="max-w-screen-2xl h-full mx-auto relative overflow-hidden ">
         <div className="mb-10 flex flex-col lg:flex-row items-start lg:items-center lg:justify-between gap-5 ">
           <div>
@@ -127,7 +127,7 @@ const LatestInsights = () => {
             ))}
           </Swiper>
         </div>
-        <div className="w-full lg:mt-8 xl:mt-15 ">
+        <div className="w-full lg:mt-8 2xl:mt-15 ">
           <Brands />
         </div>
       </div>
