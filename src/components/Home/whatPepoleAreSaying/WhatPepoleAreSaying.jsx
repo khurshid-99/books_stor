@@ -13,7 +13,7 @@ const WhatPepoleAreSaying = () => {
   const paginationRef = useRef(null);
 
   return (
-    <section className="select-none w-full h-[82vh] lg:h-[92vh] xl:h-[90vh] 2xl:h-[70vh] relative px-[5vw] py-[3vw] ">
+    <section className="select-none w-full h-[85vh] lg:h-[92vh] xl:h-[90vh] 2xl:h-[70vh] relative px-[5vw] py-[3vw] ">
       <div className="max-w-screen-2xl h-full mx-auto relative bg-secondary py-[2.5vw] ">
         <div className="w-full">
           <h1 className="text-center font-poppins-medium text-[1.3rem] lg:text-[1.7rem] leading-none mb-6 ">
