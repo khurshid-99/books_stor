@@ -7,6 +7,6 @@ import Route from "./router/Router.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Route />
-    {/* <App /> */}
+    <App />
   </StrictMode>
 );
