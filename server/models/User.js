@@ -1,102 +1,80 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: [true, 'First name is required'],
-    trim: true,
-    maxlength: [50, 'First name cannot exceed 50 characters']
-  },
-  lastName: {
-    type: String,
-    required: [true, 'Last name is required'],
-    trim: true,
-    maxlength: [50, 'Last name cannot exceed 50 characters']
-  },
-  email: {
-    type: String,
-    required: [true, 'Email is required'],
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, 'Please provide a valid email']
-  },
-  password: {
-    type: String,
-    required: [true, 'Password is required'],
-    minlength: [6, 'Password must be at least 6 characters long'],
-    select: false
-  },
-  phone: {
-    type: String,
-    validate: {
-      validator: function(v) {
-        return !v || validator.isMobilePhone(v);
-      },
-      message: 'Please provide a valid phone number'
-    }
-  },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
-  },
-  avatar: {
-    type: String,
-    default: ''
-  },
-  addresses: [{
-    type: {
-      type: String,
-      enum: ['home', 'work', 'other'],
-      default: 'home'
+    mobile: {
+        type: String,
+        required: [true, 'Mobile number is required'],
+        unique: true,
+        trim: true,
+        validate: {
+            validator: function (v) {
+                // Validate Indian mobile number format (10 digits starting with 6-9)
+                return /^[6-9]\d{9}$/.test(v);
+            },
+            message: 'Please provide a valid Indian mobile number'
+        }
     },
-    street: String,
-    city: String,
-    state: String,
-    zipCode: String,
-    country: String,
-    isDefault: {
-      type: Boolean,
-      default: false
+    name: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    email: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        validate: {
+            validator: function (v) {
+                return !v || validator.isEmail(v);
+            },
+            message: 'Please provide a valid email address'
+        }
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
+    isPremium: {
+        type: Boolean,
+        default: false
+    },
+    premiumExpiresAt: {
+        type: Date,
+        default: null
+    },
+    lastLogin: {
+        type: Date,
+        default: Date.now
+    },
+    loginCount: {
+        type: Number,
+        default: 0
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-  }],
-  wishlist: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Book'
-  }],
-  isActive: {
-    type: Boolean,
-    default: true
-  },
-  emailVerified: {
-    type: Boolean,
-    default: false
-  },
-  lastLogin: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date
 }, {
-  timestamps: true
+    timestamps: true
 });
 
-// Hash password before saving
-userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-  
-  this.password = await bcrypt.hash(this.password, 12);
-  next();
-});
+// Index for faster queries
+userSchema.index({ mobile: 1 });
+userSchema.index({ email: 1 });
 
-// Compare password method
-userSchema.methods.comparePassword = async function(candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
+// Method to check if premium is active
+userSchema.methods.isPremiumActive = function () {
+    if (!this.isPremium) return false;
+    if (!this.premiumExpiresAt) return true; // Lifetime premium
+    return new Date() < this.premiumExpiresAt;
 };
 
-// Get full name
-userSchema.virtual('fullName').get(function() {
-  return `${this.firstName} ${this.lastName}`;
-});
+// Update last login
+userSchema.methods.updateLastLogin = function () {
+    this.lastLogin = Date.now();
+    this.loginCount += 1;
+    return this.save();
+};
 
 module.exports = mongoose.model('User', userSchema);
