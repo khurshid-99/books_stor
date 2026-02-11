@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema({
 
 // Index for faster queries
 userSchema.index({ mobile: 1 });
-userSchema.index({ email: 1 });
+userSchema.index({ email: 1 }, { unique: true, sparse: true });
 
 // Method to check if premium is active
 userSchema.methods.isPremiumActive = function () {

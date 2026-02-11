@@ -102,14 +102,11 @@ const LoginModal = ({ isOpen, onClose }) => {
                                             value={mobileNumber}
                                             onChange={(e) => {
                                                 const value = e.target.value.replace(/\D/g, '');
-                                                if (value.length <= 10) {
-                                                    setMobileNumber(value);
-                                                    setError('');
-                                                }
+                                                setMobileNumber(value.slice(0, 10));
+                                                setError('');
                                             }}
                                             placeholder="9XXXXXXXXX"
                                             className="w-full pl-14 pr-4 py-3 border-2 border-gray-200 rounded-xl font-poppins-regular text-gray-900 placeholder:text-gray-400 focus:border-orange focus:outline-none transition-colors"
-                                            maxLength={10}
                                         />
                                     </div>
                                     {error && (
