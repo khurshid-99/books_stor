@@ -1,271 +1,135 @@
-# Authentication API Test Script
+# Books Store - API Testing Documentation
 
-This file contains test commands to verify the authentication API endpoints.
+This document provides a comprehensive guide to testing the authentication and user management API endpoints for the Books Store application.
 
-## Prerequisites
-- Server running on http://localhost:5001
-- MongoDB connected
+## 🚀 Getting Started
 
-## Test Flow
+### Prerequisites
+- **Backend Server**: Ensure it's running on `http://localhost:5001`.
+- **Database**: MongoDB should be active (Local or Atlas).
+- **Environment**: `.env` file must be correctly configured in the `server` directory.
+
+---
+
+## 🔐 Authentication Flow
 
 ### 1. Send OTP
+Initial step to request a verification code sent to a mobile number.
+
+**Endpoint:** `POST /api/auth/send-otp`  
+**Body:**
+```json
+{
+  "mobile": "9876543210"
+}
+```
+
+**Curl Command:**
 ```bash
 curl -X POST http://localhost:5001/api/auth/send-otp \
   -H "Content-Type: application/json" \
-  -d "{\"mobile\":\"9876543210\"}"
+  -d '{"mobile":"9876543210"}'
 ```
 
-**Expected Response:**
-```json
-{
-  "success": true,
-  "message": "OTP sent successfully",
-  "mobile": "3210"
-}
+**PowerShell Command:**
+```powershell
+Invoke-RestMethod -Uri "http://localhost:5001/api/auth/send-otp" -Method POST -ContentType "application/json" -Body '{"mobile":"9876543210"}'
 ```
-
-**Check Console:** The OTP will be logged in the server console (since Twilio is configured, it will also send SMS).
 
 ---
 
-### 2. Verify OTP
-Replace `123456` with the OTP from the console or SMS.
+### 2. Verify OTP & Login
+Verify the received code and retrieve an authentication token.
 
+**Endpoint:** `POST /api/auth/verify-otp`  
+**Body:**
+```json
+{
+  "mobile": "9876543210",
+  "otp": "123456"
+}
+```
+
+**Curl Command:**
 ```bash
 curl -X POST http://localhost:5001/api/auth/verify-otp \
   -H "Content-Type: application/json" \
-  -d "{\"mobile\":\"9876543210\",\"otp\":\"123456\"}"
+  -d '{"mobile":"9876543210","otp":"123456"}'
 ```
 
-**Expected Response:**
+**Success Response Snippet:**
 ```json
 {
   "success": true,
-  "message": "Login successful",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "id": "...",
-    "mobile": "9876543210",
-    "name": "",
-    "email": null,
-    "isPremium": false,
-    "loginCount": 1,
-    "createdAt": "2024-..."
-  }
+  "token": "eyJhbGciOiJIUzI1Ni...",
+  "user": { "id": "...", "mobile": "9876543210", "isPremium": false }
 }
 ```
-
-**Save the token** for subsequent requests.
 
 ---
 
-### 3. Get User Profile
-Replace `YOUR_TOKEN_HERE` with the token from step 2.
+## 👤 User Profile Management
 
+*All endpoints below require the `Authorization` header with the Bearer token.*
+
+### 3. Get Current User Profile
+Fetch details of the currently logged-in user.
+
+**Endpoint:** `GET /api/auth/me`
+
+**Curl Command:**
 ```bash
 curl -X GET http://localhost:5001/api/auth/me \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE"
-```
-
-**Expected Response:**
-```json
-{
-  "success": true,
-  "user": {
-    "id": "...",
-    "mobile": "9876543210",
-    "name": "",
-    "email": null,
-    "isPremium": false,
-    "premiumExpiresAt": null,
-    "loginCount": 1,
-    "lastLogin": "2024-...",
-    "createdAt": "2024-..."
-  }
-}
+  -H "Authorization: Bearer <YOUR_TOKEN_HERE>"
 ```
 
 ---
 
 ### 4. Update Profile
-Replace `YOUR_TOKEN_HERE` with the token from step 2.
+Update the user's name or email address.
 
+**Endpoint:** `PUT /api/auth/profile`  
+**Body:**
+```json
+{
+  "name": "Jane Smith",
+  "email": "jane@example.com"
+}
+```
+
+**Curl Command:**
 ```bash
 curl -X PUT http://localhost:5001/api/auth/profile \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -H "Authorization: Bearer <YOUR_TOKEN_HERE>" \
   -H "Content-Type: application/json" \
-  -d "{\"name\":\"John Doe\",\"email\":\"john@example.com\"}"
-```
-
-**Expected Response:**
-```json
-{
-  "success": true,
-  "message": "Profile updated successfully",
-  "user": {
-    "id": "...",
-    "mobile": "9876543210",
-    "name": "John Doe",
-    "email": "john@example.com",
-    "isPremium": false
-  }
-}
+  -d '{"name":"Jane Smith","email":"jane@example.com"}'
 ```
 
 ---
 
-### 5. Logout
-Replace `YOUR_TOKEN_HERE` with the token from step 2.
+## ⚠️ Important Implementation Details
 
-```bash
-curl -X POST http://localhost:5001/api/auth/logout \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE"
-```
+### Sparse Email Indexing
+The database is configured with a **sparse unique index** on the `email` field. This means:
+- Multiple users can exist without an email address (initial registration).
+- If an email is provided, it **must** be unique across the entire database.
 
-**Expected Response:**
-```json
-{
-  "success": true,
-  "message": "Logged out successfully"
-}
-```
-
----
-
-## PowerShell Commands (Windows)
-
-If you're using PowerShell, use these commands instead:
-
-### Send OTP
-```powershell
-Invoke-RestMethod -Uri "http://localhost:5001/api/auth/send-otp" `
-  -Method POST `
-  -ContentType "application/json" `
-  -Body '{"mobile":"9876543210"}'
-```
-
-### Verify OTP
-```powershell
-$response = Invoke-RestMethod -Uri "http://localhost:5001/api/auth/verify-otp" `
-  -Method POST `
-  -ContentType "application/json" `
-  -Body '{"mobile":"9876543210","otp":"123456"}'
-
-$token = $response.token
-Write-Host "Token: $token"
-```
-
-### Get Profile
-```powershell
-Invoke-RestMethod -Uri "http://localhost:5001/api/auth/me" `
-  -Method GET `
-  -Headers @{Authorization="Bearer $token"}
-```
-
-### Update Profile
-```powershell
-Invoke-RestMethod -Uri "http://localhost:5001/api/auth/profile" `
-  -Method PUT `
-  -ContentType "application/json" `
-  -Headers @{Authorization="Bearer $token"} `
-  -Body '{"name":"John Doe","email":"john@example.com"}'
-```
-
----
-
-## Error Cases to Test
-
-### Invalid Mobile Number
-```bash
-curl -X POST http://localhost:5001/api/auth/send-otp \
-  -H "Content-Type: application/json" \
-  -d "{\"mobile\":\"1234567890\"}"
-```
-
-**Expected:** Error - Invalid mobile number (must start with 6-9)
+### Input Sanitization
+The mobile number input automatically strips non-numeric characters and limits length to 10 digits to prevent formatting errors.
 
 ### Rate Limiting
-Send OTP request twice within 60 seconds:
-
-```bash
-curl -X POST http://localhost:5001/api/auth/send-otp \
-  -H "Content-Type: application/json" \
-  -d "{\"mobile\":\"9876543210\"}"
-```
-
-**Expected:** 429 error - "Please wait before requesting another OTP"
-
-### Invalid OTP
-```bash
-curl -X POST http://localhost:5001/api/auth/verify-otp \
-  -H "Content-Type: application/json" \
-  -d "{\"mobile\":\"9876543210\",\"otp\":\"000000\"}"
-```
-
-**Expected:** Error - "Invalid OTP. Please try again."
-
-### Unauthorized Access
-```bash
-curl -X GET http://localhost:5001/api/auth/me
-```
-
-**Expected:** 401 error - "Access denied. No token provided."
+- **Send OTP**: Limited to once every 60 seconds per IP.
+- **Verification Attempts**: Users are limited to 5 attempts per OTP.
 
 ---
 
-## Integration with Frontend
+## 🛠️ Debugging
 
-Update your frontend code to use these endpoints:
-
-### LoginModal.jsx - Send OTP
-```javascript
-const response = await fetch('http://localhost:5001/api/auth/send-otp', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    mobile: mobileNumber,
-  }),
-});
-```
-
-### OTPVerification.jsx - Verify OTP
-```javascript
-const response = await fetch('http://localhost:5001/api/auth/verify-otp', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    mobile: mobileNumber,
-    otp: otpValue,
-  }),
-});
-
-const data = await response.json();
-localStorage.setItem('authToken', data.token);
-```
-
-### Protected Routes - Use Token
-```javascript
-const response = await fetch('http://localhost:5001/api/auth/me', {
-  method: 'GET',
-  headers: {
-    'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-  },
-});
-```
+- **Environment Variables**: If the server fails to connect to MongoDB, ensure `MONGODB_URI` is correctly set in `server/.env`.
+- **Duplicate Key Error (E11000)**: If you see this for `email_1`, it means a user is trying to set an email that already exists in the system.
+- **CORS Issues**: Ensure `http://localhost:5173` is listed in the `cors` configuration in `index.js`.
 
 ---
 
-## Notes
-
-1. **OTP in Console**: When Twilio is configured, OTP is sent via SMS. Check server console for the OTP during development.
-2. **Token Storage**: Store JWT token in localStorage or sessionStorage
-3. **Token Expiry**: Tokens expire after 30 days
-4. **CORS**: Frontend must be running on allowed origins (localhost:3000, 5173, or 5174)
-
----
-
-**Status**: ✅ All endpoints are ready for testing!
+**Last Updated**: 2026-02-11
+**Status**: ✅ All Authentication and Profile modules have been updated and refactored.
